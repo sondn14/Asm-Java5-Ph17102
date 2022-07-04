@@ -1,28 +1,48 @@
 package com.asm.model;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "`order`")
-public class Order {
-	
+@Table(name = "`orders`")
+public class Order implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@Column(name="`orderid`", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderId;
 	
-	@Column(name="`createddate`", nullable = false)
-	private Date createdDate;
+	@Temporal(TemporalType.DATE)
+	private Date orderDate;
 	
-	@Column(name="`customernumber`", nullable = true)
-	private String customerNumber;
+	@Column
+	private BigDecimal amount;
+	
+	@Column
+	private short status;
+	
+	@ManyToOne
+	@JoinColumn(name = "`username`")
+	private User user;
+	
+	@OneToMany(mappedBy = "orders",orphanRemoval = true,cascade = CascadeType.ALL)
+	private Set<OrderDetail> orderDetail;
 
 	public Integer getOrderId() {
 		return orderId;
@@ -32,20 +52,47 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public Date getOrderDate() {
+		return orderDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 
-	public String getCustomerNumber() {
-		return customerNumber;
+	public BigDecimal getAmount() {
+		return amount;
 	}
 
-	public void setCustomerNumber(String customerNumber) {
-		this.customerNumber = customerNumber;
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
-	
+
+	public short getStatus() {
+		return status;
+	}
+
+	public void setStatus(short status) {
+		this.status = status;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<OrderDetail> getOrderDetail() {
+		return orderDetail;
+	}
+
+	public void setOrderDetail(Set<OrderDetail> orderDetail) {
+		this.orderDetail = orderDetail;
+	}
+
+	public Order() {
+		super();
+	}
 }

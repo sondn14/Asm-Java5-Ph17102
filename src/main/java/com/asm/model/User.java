@@ -1,42 +1,42 @@
 package com.asm.model;
 
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "`users`")
-public class User {
-	
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer userId;
-	
 	@Column(name = "`username`")
 	private String userName;
-	
+
+	@Column(name = "`password`")
+	private String passWord;
+
 	@Column
 	private int role;
-	
+
 	@Column
 	private String phone;
-	
+
 	@Column
 	private String addre;
-	
+
 	@Column
 	private String email;
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	private Set<Order> orders;
 
 	public String getUserName() {
 		return userName;
@@ -78,9 +78,23 @@ public class User {
 		this.email = email;
 	}
 
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+
 	public User() {
 		super();
 	}
-	
-	
 }

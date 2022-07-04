@@ -1,6 +1,8 @@
 jQuery(document).ready(function($){
     
     // jQuery sticky Menu
+    var x = 1000;
+	x = x.toLocaleString('en-US', {style : 'currency', currency : 'VND'});
     
 	$(".mainmenu-area").sticky({topSpacing:0});
     

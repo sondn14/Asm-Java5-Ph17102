@@ -41,9 +41,21 @@
 							<li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
 							<li><a href="#"><i class="fa fa-heart"></i> Yêu thích</a></li>
 							<li><a href="#"><i class="fa fa-user"></i> Giỏ hàng</a></li>
-							<li><a href="checkout.html"><i class="fa fa-user"></i>
-									Đăng xuất</a></li>
-							<li><a href="#"><i class="fa fa-user"></i> Đăng nhập</a></li>
+							<c:if test="${userSession == null}">
+								<li><a href="checkout.html"><i class="fa fa-user"></i>
+										Đăng xuất</a></li>
+								<li><a href="/login"><i class="fa fa-user"></i>Đăng
+										nhập</a></li>
+							</c:if>
+							<c:if test="${userSession != null}">
+								<li><i class="fa fa-user"></i></li>
+								<li class="dropdown dropdown-small"><a
+									data-toggle="dropdown" data-hover="dropdown"
+									class="dropdown-toggle" href="#">${userSession.userName}</a>
+									<ul class="dropdown-menu">
+										<li><a href="/logout">Đăng xuất</a></li>
+									</ul></li>
+							</c:if>
 						</ul>
 					</div>
 				</div>
@@ -91,7 +103,7 @@
 
 				<div class="col-sm-6">
 					<div class="shopping-item">
-						<a href="cart.html">Giỏ hàng<i class="fa fa-shopping-cart"></i></a>
+						<a href="/cart">Giỏ hàng<i class="fa fa-shopping-cart"></i></a>
 					</div>
 				</div>
 			</div>
@@ -113,10 +125,14 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/home">Trang chủ</a></li>
-						<li><a href="/product">Sản phẩm</a></li>
+						<li><a href="/motobike">Sản phẩm</a></li>
 						<li><a href="single-product.html">Thông tin</a></li>
 						<li><a href="#">Phản hồi</a></li>
 						<li><a href="#">Liên hệ</a></li>
+						<c:if test="${userSession.role == 0}">
+							<li><a href="/admin">Admin</a></li>
+						</c:if>
+						<li><a href="/list-order">Đơn hàng của tôi</a></li>
 					</ul>
 				</div>
 			</div>
@@ -214,13 +230,14 @@
 										<div class="product-hover">
 											<a href="#" class="add-to-cart-link"><i
 												class="fa fa-shopping-cart"></i>Mua ngay</a> <a
-												href="single-product.html" class="view-details-link"><i
-												class="fa fa-link"></i>Xem thêm</a>
+												href="/motobike/detail/${sp.motobikeId}"
+												class="view-details-link"><i class="fa fa-link"></i>Xem
+												thêm</a>
 										</div>
 									</div>
 
 									<h2>
-										<a href="single-product.html">${sp.motobikeName}</a>
+										<a href="motobike/detail/${sp.motobikeId}">${sp.motobikeName}</a>
 									</h2>
 
 									<div class="product-carousel-price">
@@ -268,8 +285,8 @@
 						<h2 class="product-wid-title">Giảm giá</h2>
 						<a href="" class="wid-view-more">Xem thêm</a>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike2.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike2.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Kawasaki</a>
 							</h2>
@@ -283,8 +300,8 @@
 							</div>
 						</div>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike1.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike1.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Z100t</a>
 							</h2>
@@ -299,8 +316,8 @@
 							</div>
 						</div>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike3.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike3.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">India-moto</a>
 							</h2>
@@ -321,8 +338,8 @@
 						<h2 class="product-wid-title">Bán chạy nhất</h2>
 						<a href="#" class="wid-view-more">Xem thêm</a>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike4.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike4.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.jsp">Dream2002</a>
 							</h2>
@@ -337,8 +354,8 @@
 							</div>
 						</div>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike5.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike5.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Lemon_TZ</a>
 							</h2>
@@ -353,8 +370,8 @@
 							</div>
 						</div>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike6.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike6.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Napoleon TS</a>
 							</h2>
@@ -375,8 +392,8 @@
 						<h2 class="product-wid-title">Mới nhất</h2>
 						<a href="#" class="wid-view-more">Xem thêm</a>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike7.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike7.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Sunfat Fadin</a>
 							</h2>
@@ -391,8 +408,8 @@
 							</div>
 						</div>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike8.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike8.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Tsunade</a>
 							</h2>
@@ -407,8 +424,8 @@
 							</div>
 						</div>
 						<div class="single-wid-product">
-							<a href="single-product.html"><img
-								src="images/motobike1.png" alt="" class="product-thumb"></a>
+							<a href="single-product.html"><img src="images/motobike1.png"
+								alt="" class="product-thumb"></a>
 							<h2>
 								<a href="single-product.html">Van Navi</a>
 							</h2>

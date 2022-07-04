@@ -1,42 +1,67 @@
 package com.asm.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "`orderdetail`")
-@IdClass(OrderDetailId.class)
-public class OrderDetail {
+@Table(name = "`orderDetail`")
+public class OrderDetail implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@ManyToOne
-	@JoinColumn(name = "`orderid`", insertable = false, updatable = false)
-	private Order order;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int orderDetaiId;
+		
+	@Column
+	private int quantity;
 	
-	@Id
+	@Column
+	private BigDecimal unitPrice;
+	
 	@ManyToOne
-	@JoinColumn(name = "`motobikeid`", insertable = false, updatable = false)
+	@JoinColumn(name = "motobikeId")
 	private Motobike motobike;
 	
-	@Column(name="`purchasedquantity`", nullable = false)
-	private Integer purchasedQuantity;
-	
-	@Column(name="`purchasedmoney`", nullable = false)
-	private BigDecimal purchasedMoney;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orderId")
+	private Order orders;
 
-	public Order getOrder() {
-		return order;
+	public int getOrderDetaiId() {
+		return orderDetaiId;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrderDetaiId(int orderDetaiId) {
+		this.orderDetaiId = orderDetaiId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 
 	public Motobike getMotobike() {
@@ -47,27 +72,15 @@ public class OrderDetail {
 		this.motobike = motobike;
 	}
 
-	public Integer getPurchasedQuantity() {
-		return purchasedQuantity;
+	public Order getOrder() {
+		return orders;
 	}
 
-	public void setPurchasedQuantity(Integer purchasedQuantity) {
-		this.purchasedQuantity = purchasedQuantity;
-	}
-
-	public BigDecimal getPurchasedMoney() {
-		return purchasedMoney;
-	}
-
-	public void setPurchasedMoney(BigDecimal purchasedMoney) {
-		this.purchasedMoney = purchasedMoney;
+	public void setOrder(Order orders) {
+		this.orders = orders;
 	}
 
 	public OrderDetail() {
 		super();
 	}
-
-	
-	
-	
 }

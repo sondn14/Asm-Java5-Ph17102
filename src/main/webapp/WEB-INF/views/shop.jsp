@@ -40,9 +40,21 @@
 							<li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>
 							<li><a href="#"><i class="fa fa-heart"></i> Yêu thích</a></li>
 							<li><a href="#"><i class="fa fa-user"></i> Giỏ hàng</a></li>
-							<li><a href="checkout.html"><i class="fa fa-user"></i>
-									Đăng xuất</a></li>
-							<li><a href="#"><i class="fa fa-user"></i> Đăng nhập</a></li>
+							<c:if test="${userSession == null}">
+								<li><a href="checkout.html"><i class="fa fa-user"></i>
+										Đăng xuất</a></li>
+								<li><a href="/login"><i class="fa fa-user"></i>Đăng
+										nhập</a></li>
+							</c:if>
+							<c:if test="${userSession != null}">
+								<li><i class="fa fa-user"></i></li>
+								<li class="dropdown dropdown-small"><a
+									data-toggle="dropdown" data-hover="dropdown"
+									class="dropdown-toggle" href="#">${userSession.userName}</a>
+									<ul class="dropdown-menu">
+										<li><a href="/logout">Đăng xuất</a></li>
+									</ul></li>
+							</c:if>
 						</ul>
 					</div>
 				</div>
@@ -90,7 +102,7 @@
 
 				<div class="col-sm-6">
 					<div class="shopping-item">
-						<a href="cart.html">Giỏ hàng<i class="fa fa-shopping-cart"></i></a>
+						<a href="/cart">Giỏ hàng<i class="fa fa-shopping-cart"></i></a>
 					</div>
 				</div>
 			</div>
@@ -112,10 +124,14 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="/home">Trang chủ</a></li>
-						<li class="active"><a href="/product">Sản phẩm</a></li>
+						<li class="active"><a href="/motobike">Sản phẩm</a></li>
 						<li><a href="single-product.html">Thông tin</a></li>
 						<li><a href="#">Phản hồi</a></li>
 						<li><a href="#">Liên hệ</a></li>
+						<c:if test="${userSession.role == 0}">
+							<li><a href="/admin">Admin</a></li>
+						</c:if>
+						<li><a href="/list-order">Đơn hàng của tôi</a></li>
 					</ul>
 				</div>
 			</div>
@@ -139,25 +155,27 @@
 		<div class="container">
 			<div class="row">
 				<c:forEach items="${listXe}" var="sp">
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product text-center">
-							<div class="product-upper">
-								<img src="images/${sp.anh}" alt="">
-							</div>
-							<h2>
-								<a href="">${sp.motobikeName}</a>
-							</h2>
-							<div class="product-carousel-price">
-								<ins>${sp.price} VND</ins>
-							</div>
+					<c:if test="${sp.quantity > 0}">
+						<div class="col-md-3 col-sm-6">
+							<div class="single-shop-product text-center">
+								<div class="product-upper">
+									<img src="images/${sp.anh}" alt="">
+								</div>
+								<h2>
+									<a href="/motobike/detail/${sp.motobikeId}">${sp.motobikeName}</a>
+								</h2>
+								<div class="product-carousel-price">
+									<ins>${sp.price} VND</ins>
+								</div>
 
-							<div class="product-option-shop">
-								<a class="add_to_cart_button" data-quantity="1"
-									data-product_sku="" data-product_id="70" rel="nofollow"
-									href="/canvas/shop/?add-to-cart=70">Thêm giỏ hàng</a>
+								<div class="product-option-shop">
+									<a class="add_to_cart_button" data-quantity="1"
+										data-product_sku="" data-product_id="70" rel="nofollow"
+										href="/canvas/shop/?add-to-cart=70">Thêm giỏ hàng</a>
+								</div>
 							</div>
 						</div>
-					</div>
+					</c:if>
 				</c:forEach>
 			</div>
 			<div class="row">
